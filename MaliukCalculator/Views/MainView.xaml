@@ -1,0 +1,124 @@
+﻿<Window x:Class="MaliukCalculator.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MaliukCalculator.Views"
+        xmlns:cal="http://www.caliburnproject.org"
+        mc:Ignorable="d"
+        Title="Calculator Maliuk" Width="720" Height="408px"
+        FontFamily="Courier New" FontSize="25" MinWidth="650" MinHeight="350">
+	<Window.Resources>
+		<Style TargetType="Button" x:Key="Buttons">
+			<Setter Property="Background" Value="#dbe3e5"/>
+			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border Name="container" Cursor="Hand" Padding="{TemplateBinding Padding}" 
+                         BorderThickness="1"
+                         Background="{TemplateBinding Background}">
+							<ContentPresenter ContentSource="{TemplateBinding Content}" 
+                         ContentTemplate="{TemplateBinding ContentTemplate}"
+                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup>
+									<VisualState Name="Normal">
+									</VisualState>
+									<VisualState Name="MouseOver">
+										<Storyboard>
+											<ColorAnimation Storyboard.TargetName="container" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                     Duration="0:0:0.05" To="#cdc9c3"></ColorAnimation>
+										</Storyboard>
+									</VisualState>
+									<VisualState Name="Pressed">
+										<Storyboard>
+											<ColorAnimation Storyboard.TargetName="container" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                     Duration="0:0:0.00" To="#555555"></ColorAnimation>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50px"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="10*"></ColumnDefinition>
+			<ColumnDefinition Width="7*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<!-- 0 row -->
+		<TextBox Grid.Row="0" Grid.Column="0" x:Name="Screen" TextAlignment="Right" VerticalContentAlignment="Center" IsReadOnly="True" Background="#dbe3e5"></TextBox>
+		<!-- 1 row -->
+		<Grid Grid.Row="1" Grid.Column="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<!-- 0 row -->
+			<Button Grid.Row="0" Grid.Column="0" Name="DoQuestion" Style="{StaticResource Buttons}" IsEnabled="False"></Button>
+			<Button Grid.Row="0" Grid.Column="1" Name="Clear" Style="{StaticResource Buttons}">C</Button>
+			<Button Grid.Row="0" Grid.Column="2" Name="Backspace" Style="{StaticResource Buttons}">&lt;--</Button>
+			<Button Grid.Row="0" Grid.Column="3" cal:Message.Attach="ButtonPress($source)" Name="Divide" Style="{StaticResource Buttons}">/</Button>
+			<!-- 1 row -->
+			<Button Grid.Row="1" Grid.Column="0" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">7</Button>
+			<Button Grid.Row="1" Grid.Column="1" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">8</Button>
+			<Button Grid.Row="1" Grid.Column="2" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">9</Button>
+			<Button Grid.Row="1" Grid.Column="3" cal:Message.Attach="ButtonPress($source)" Name="Multiply" Style="{StaticResource Buttons}">*</Button>
+			<!-- 2 row -->
+			<Button Grid.Row="2" Grid.Column="0" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">4</Button>
+			<Button Grid.Row="2" Grid.Column="1" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">5</Button>
+			<Button Grid.Row="2" Grid.Column="2" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">6</Button>
+			<Button Grid.Row="2" Grid.Column="3" cal:Message.Attach="ButtonPress($source)" Name="Minus" Style="{StaticResource Buttons}">-</Button>
+			<!-- 3 row -->
+			<Button Grid.Row="3" Grid.Column="0" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">1</Button>
+			<Button Grid.Row="3" Grid.Column="1" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">2</Button>
+			<Button Grid.Row="3" Grid.Column="2" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">3</Button>
+			<Button Grid.Row="3" Grid.Column="3" cal:Message.Attach="ButtonPress($source)" Name="Plus" Style="{StaticResource Buttons}">+</Button>
+			<!-- 4 row -->
+			<Button Grid.Row="4" Grid.Column="0" cal:Message.Attach="DoQuestion()" Style="{StaticResource Buttons}" IsEnabled="False"></Button>
+			<Button Grid.Row="4" Grid.Column="1" cal:Message.Attach="ButtonPress($source)" Style="{StaticResource Buttons}">0</Button>
+			<Button Grid.Row="4" Grid.Column="2" Name="Coma" Style="{StaticResource Buttons}">,</Button>
+			<Button Grid.Row="4" Grid.Column="3" Name="Equals" Style="{StaticResource Buttons}">=</Button>
+		</Grid>
+		<Grid Grid.Row="0" Grid.Column="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="4*"></ColumnDefinition>
+				<ColumnDefinition Width="4*"></ColumnDefinition>
+				<ColumnDefinition Width="4*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Button Grid.Column="0" Name="ClearHistory" Style="{StaticResource Buttons}" FontSize="20">Clear</Button>
+			<Button Grid.Column="2" Name="About" Style="{StaticResource Buttons}" FontSize="20">About</Button>
+			<TextBlock Grid.Column="1" TextAlignment="Center" VerticalAlignment="Bottom" FontSize="20">History</TextBlock>
+		</Grid>
+		<ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="1">
+			<ItemsControl Name="History">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Button Background="#dbe3e5" HorizontalContentAlignment="Stretch" Style="{StaticResource Buttons}" Tag="{Binding Calculation}" cal:Message.Attach="HistoryPull($source)">
+							<TextBlock Text="{Binding Calculation}" TextAlignment="Left" />
+						</Button>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
+	</Grid>
+</Window>
